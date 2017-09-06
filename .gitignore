@@ -102,3 +102,6 @@ ENV/
 
 #my login
 login.py
+
+#pycharm
+.ideas\
