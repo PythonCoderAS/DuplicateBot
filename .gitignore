@@ -103,6 +103,9 @@ ENV/
 #my login
 login.py
 
+#pycharm
+.idea/
+
 #files used by program
 blockusers.txt
 posts_written_to.txt
