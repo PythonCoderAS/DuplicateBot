@@ -3,7 +3,21 @@ import logging
 import praw
 from login import reddit
 
-
+logging.basicConfig(level=logging.WARN)
+logger = logging.getLogger(__name__)
+handler = logging.FileHandler('debug.log')
+handler.setLevel(logging.DEBUG)
+handler2 = logging.FileHandler('info.log')
+handler2.setLevel(logging.INFO)
+handler3 = logging.FileHandler('errors.log')
+handler3.setLevel(logging.WARN)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+handler2.setFormatter(formatter)
+handler3.setFormatter(formatter)
+logger.addHandler(handler)
+logger.addHandler(handler2)
+logger.addHandler(handler3)
 
 def action():
     for sub_id in reddit.subreddit('all').stream.submissions():
@@ -58,21 +72,6 @@ def action():
             
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.WARN)
-    logger = logging.getLogger(__name__)
-    handler = logging.FileHandler('debug.log')
-    handler.setLevel(logging.DEBUG)
-    handler2 = logging.FileHandler('info.log')
-    handler2.setLevel(logging.INFO)
-    handler3 = logging.FileHandler('errors.log')
-    handler3.setLevel(logging.WARN)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
-    handler2.setFormatter(formatter)
-    handler3.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.addHandler(handler2)
-    logger.addHandler(handler3)
     while True:
         try:
             action()
