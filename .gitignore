@@ -102,6 +102,7 @@ ENV/
 
 #my login
 login.py
+Utlities/login.py
 
 #pycharm
 .idea/
@@ -111,3 +112,4 @@ blockusers.txt
 posts_written_to.txt
 writes.txt
 replies.txt
+
