@@ -1,37 +1,27 @@
 import datetime
 import logging
 import praw
+import prawcore
+import sys
 from login import reddit
 
-logging.basicConfig(level=logging.WARN)
+
+file_handler = logging.FileHandler(filename='duplicates.log')
+stdout_handler = logging.StreamHandler(sys.stdout)
+handlers = [file_handler, stdout_handler]
+
+logging.basicConfig(
+    level=logging.DEBUG, 
+    format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
+    handlers=handlers
+)
+
 logger = logging.getLogger(__name__)
-handler = logging.FileHandler('debug.log')
-handler.setLevel(logging.DEBUG)
-handler2 = logging.FileHandler('info.log')
-handler2.setLevel(logging.INFO)
-handler3 = logging.FileHandler('errors.log')
-handler3.setLevel(logging.WARN)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-handler2.setFormatter(formatter)
-handler3.setFormatter(formatter)
-logger.addHandler(handler)
-logger.addHandler(handler2)
-logger.addHandler(handler3)
 
 def action():
     for sub_id in reddit.subreddit('all').stream.submissions():
         logging.debug('Starting submission {}'.format(sub_id))
         blockeduser = 0
-        for item in reddit.inbox.messages(limit=5):
-            if str(item.subject) == 'Remove me from posts':
-                body = str(item.body)
-                with open('blockusers.txt', 'a+') as file:
-                    if str(item.author) == body and body not in file.read():
-                        newstring = username.replace(r'/u/','')
-                        newstring = newstring = '\n'
-                        file.write(newstring)
-        logger.debug('Cycle 1 for submission {} has finished'.format(sub_id))
         duplicates = []
         submission = praw.models.Submission(reddit, id = sub_id)
         with open('blockusers.txt','r') as newfile:
@@ -39,9 +29,9 @@ def action():
                 line = line.strip('\n')
                 if str(submission.author) == line:
                     blockeduser = 1
+                    logger.debug('User {}\'s submission {} was blocked from posting'.format(str(submission.author),str(sub_id)))
                 else:
                     pass
-        logger.debug('Cycle 2 for submission {} has finished'.format(sub_id))
         if blockeduser == 0:
             for duplicate in submission.duplicates():            
                 dup_sub = praw.models.Submission(reddit, id = duplicate)
@@ -57,14 +47,15 @@ def action():
                         for dup in duplicates:
                             message = str(message + '\n * [{}]({}) on /r/{} (created at {} by {})').format(dup['title'], dup['link'], dup['subreddit'], dup['time'], dup['author'])
                         message = message + '\n\n ---- \n\n ^^I ^^am ^^a ^^bot  ^^[FAQ](https://www.reddit.com/r/DuplicatesBot/wiki/index)-[Code](https://github.com/PokestarFan/DuplicateBot-[Bugs](https://www.reddit.com/r/DuplicatesBot/comments/6ypgmx/bugs_and_problems/)-[Suggestions](https://www.reddit.com/r/DuplicatesBot/comments/6ypg85/suggestion_for_duplicatesbot/)-[Block](https://www.reddit.com/r/DuplicatesBot/wiki/index#wiki_block_bot_from_tagging_on_your_posts)'
-            logger.debug('Cycle 3 for submission {} has finished'.format(sub_id))
             try:
                 submission.reply(message)
                 logger.info('Message posted on {}'.format(sub_id))
-                logger.debug('Message content: \n {}'.format(message))
                 message = ''
             except(praw.exceptions.APIException, UnboundLocalError):
-                logger.debug('Submission {} has been skipped due to being blocked or missing text'.format(sub_id), exc_info=True)
+                logger.info('Submission {} has been skipped due to missing text'.format(sub_id))
+                message = ''
+            except(prawcore.exceptions.Forbidden):
+                logger.info('You are blocked on /r/{}'.format(str(submission.subreddit)))
                 message = ''
             except:
                 logger.error('Error occured!', exc_info=True)
