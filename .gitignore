@@ -113,3 +113,5 @@ posts_written_to.txt
 writes.txt
 replies.txt
 
+#logs
+*.log
