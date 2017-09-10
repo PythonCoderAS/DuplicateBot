@@ -1,4 +1,4 @@
-from datetime import datetime as time
+from datetime import datetime
 import logging
 import praw
 import prawcore
@@ -6,7 +6,7 @@ import sys
 from login import reddit
 
 
-file_handler = logging.FileHandler(filename='duplicates_{}.log'.format(time.now().strftime('%m_%d_%y')))
+file_handler = logging.FileHandler(filename='duplicates_{}.log'.format(datetime.now().strftime('%m_%d_%y')))
 stdout_handler = logging.StreamHandler(sys.stdout)
 handlers = [file_handler, stdout_handler]
 
@@ -27,17 +27,17 @@ def action():
         with open('blockusers.txt','r') as newfile:
             for line in newfile.readlines():
                 line = line.strip('\n')
-                if str(submission.author) == line:
+                if str(submission.author) == line or 'bot' in str(submission.author):
                     blockeduser = 1
                     logger.debug('User {}\'s submission {} was blocked from posting'.format(str(submission.author),str(sub_id)))
                 else:
                     pass
         if blockeduser == 0:
-            for duplicate in submission.duplicates():            
+            for duplicate in submission.duplicates():   
                 dup_sub = praw.models.Submission(reddit, id = duplicate)
-                if 'ImagesOf' not in str(dup_sub.subreddit) and 'auto' not in str(dup_sub.subreddit):
+                if 'imagesof' not in str(dup_sub.subreddit).lower() and 'auto' not in str(dup_sub.subreddit).lower():
                     time = dup_sub.created
-                    time = str(time.fromtimestamp(time))
+                    time = str(datetime.fromtimestamp(time))
                     author = str(dup_sub.author)
                     if str(submission.author) == author:
                         author = author + '[author of both threads]'
