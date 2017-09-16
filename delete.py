@@ -1,15 +1,17 @@
 import praw
-from login import reddit
+from modules.logger import setup_logger
+from modules.login import reddit
+import logging
 
+logger = setup_logger('user_removed_comments')
 
-def main(limit, count=0):
-	for comment in r.redditor(str(user)).comments.new(limit=limit):
-		comment.delete()
-		count = count + 1
-		print('Finished comment #'+str(count))
-		
-if __name__ == '__main__':
-	limit = input('How many recent comments to delete? Type None for all comments')
-	count = 0
-	main(limit, count)
-	print('Complete')
+for item in reddit.inbox.stream():
+	logger.debug('On item {}'.format(str(item)))
+	try:
+		if item.body.lower() == 'delete':
+			item.parent.delete()
+			logging.info('Comment {} removed'.format(str(item.parent)))
+			item.reply('The top level post has been removed.')
+	except:
+		logging.debug('Item {} skipped'.format(str(item)))
+		pass

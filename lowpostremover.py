@@ -9,7 +9,11 @@
 
 import time
 import praw
-from login import reddit as r
+from modules.logger import setup_logger
+from modules.login import reddit as r
+import logging
+
+logger = setup_logger('low_score_remover')
 
 ###########################
 # definitions                     
@@ -23,7 +27,6 @@ setvalue = 1
 
 #defining the searching and removal
 def action():
-    global submission_titles #making global submission title list
     global comment_submissions #making glocal comment submission title list
     comment_submissions = []
     submission_titles = []
@@ -31,43 +34,30 @@ def action():
     comment_number = 0
     current_submission_number = 0
     current_comment_number = 0
-    print('Searching...')
+    logging.info('Searching...')
     user = r.user.me()
-    for submission in r.redditor(str(user)).submissions.new(limit=None): #scanning all submissions by reddit user without limit
-        if submission.score < setvalue: #if statement checking the submission score < 0
-           submission.delete() #deleting the submission
-           submission_titles.append(submission.title) #adding the submission title to the list
     for comment in r.redditor(str(user)).comments.new(limit=None): #scanning all comments by reddit user without limit
+        logging.debug('On comment {}'.format(str(comment)))
         if comment.score < setvalue: #if statement checking the comment score < 0 
            comment.delete() #deleteing the comment if < 0
+           logging.info('Removed comment {}'.format(str(comment)))
            comment_submissions.append(comment.submission.title) #adding the comment's original submission title to the list
            
 #defining the outputs
 def print_results():
-    print('Search Complete')
-    print('--------------------------------------------------')
-    #if statement. True if there is 1 or more submissions removed. 
-    if len(submission_titles) > 0:
-        #printing true results
-        print('Removed ' + str(len(submission_titles)) + ' submission(s).')
-        print('Submission title(s) include: ')
-        print(*submission_titles, sep='\n') #printing submission titles with line breaks
-        print('--------------------------------------------------')
-    else:
-        #printing false results
-        print('No submissions removed.')
-        print('--------------------------------------------------')
+    logging.info('Search Complete')
+    logging.info('--------------------------------------------------')
     #if statement. True if there is 1 or more comments removed. 
     if len(comment_submissions) > 0:
-        #printing true results
-        print('Removed ' + str(len(comment_submissions)) + ' comment(s).')
-        print('Comments were under the following submissions: ')
-        print(*comment_submissions, sep='\n') #printing comment's submission's titles with line breaks
-        print('--------------------------------------------------')
+        #logging.infoing true results
+        logging.info('Removed ' + str(len(comment_submissions)) + ' comment(s).')
+        logging.info('Comments were under the following submissions: ')
+        logging.info(*comment_submissions, sep='\n') #logging.infoing comment's submission's titles with line breaks
+        logging.info('--------------------------------------------------')
     else:
-        #printing false results
-        print('No comments removed.')
-        print('--------------------------------------------------')
+        #logging.infoing false results
+        logging.info('No comments removed.')
+        logging.info('--------------------------------------------------')
 
 ###########################
 # code execution
@@ -77,7 +67,6 @@ def print_results():
 def main():
     action()
     print_results()
-	
+    
 while True:
     main()
-    time.sleep(600)

@@ -101,17 +101,14 @@ ENV/
 .mypy_cache/
 
 #my login
-login.py
-Utlities/login.py
+*login.py
 
 #pycharm
 .idea/
 
 #files used by program
 blockusers.txt
-posts_written_to.txt
-writes.txt
-replies.txt
 
 #logs
 *.log
+logs/
