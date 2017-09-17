@@ -16,7 +16,7 @@ import logging
 logger = setup_logger('low_score_remover')
 
 ###########################
-# definitions                     
+# defistarnitions                     
 ###########################
 
 #defining the log in process
@@ -34,5 +34,7 @@ def action():
         if comment.score < setvalue: #if statement checking the comment score < 0 
            comment.delete() #deleteing the comment if < 0
            logging.info('Removed comment {}'.format(str(comment)))
-    
-action()
+
+while True:		   
+	action()
+	time.sleep(60)

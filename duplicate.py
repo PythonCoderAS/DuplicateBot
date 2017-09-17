@@ -28,9 +28,9 @@ def action():
                     if 'imagesof' not in str(dup_sub.subreddit).lower() and 'auto' not in str(dup_sub.subreddit).lower() and 'bot' not in str(dup_sub.author).lower() and 'mistyfront' not in str(dup_sub.subreddit).lower() and 'unitedfederation' not in str(dup_sub.subreddit).lower():
                         time = dup_sub.created
                         time = str(datetime.fromtimestamp(time))
-                        author = str(dup_sub.author)
+                        author = '/u/'+str(dup_sub.author)
                         if str(submission.author) == author:
-                            author = author + '[author of both threads]'
+                            author = author + ' [author of both threads]'
                         duplicates.append({'title':str(dup_sub.title), 'subreddit':str(dup_sub.subreddit), 'link':'https://www.reddit.com'+str(dup_sub.permalink), 'time':str(time), 'author':author, 'karma': str(dup_sub.score)})
                         if len(duplicates) > 0:
                             message = 'Here is a list of threads in other subreddits about the same content:\n'
