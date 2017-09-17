@@ -1,3 +1,4 @@
 @echo off
-py duplicate.py
-run.bat
+start py duplicate.py
+start py delete.py
+start py lowpostremover.py

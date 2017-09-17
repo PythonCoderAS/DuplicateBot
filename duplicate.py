@@ -36,7 +36,7 @@ def action():
                             message = 'Here is a list of threads in other subreddits about the same content:\n'
                             for dup in duplicates:
                                 message = str(message + '\n * [{}]({}) on /r/{} with {} karma (created at {} by {})').format(dup['title'], dup['link'], dup['subreddit'], dup['karma'],dup['time'], dup['author'])
-                            message = message + '\n\n ---- \n\n ^^I ^^am ^^a ^^bot  ^^[FAQ](https://www.reddit.com/r/DuplicatesBot/wiki/index)-[Code](https://github.com/PokestarFan/DuplicateBot)-[Bugs](https://www.reddit.com/r/DuplicatesBot/comments/6ypgmx/bugs_and_problems/)-[Suggestions](https://www.reddit.com/r/DuplicatesBot/comments/6ypg85/suggestion_for_duplicatesbot/)-[Block](https://www.reddit.com/r/DuplicatesBot/wiki/index#wiki_block_bot_from_tagging_on_your_posts)'
+                            message = message + '\n\n ---- \n\n ^^I ^^am ^^a ^^bot  ^^[FAQ](https://www.reddit.com/r/DuplicatesBot/wiki/index)-[Code](https://github.com/PokestarFan/DuplicateBot)-[Bugs](https://www.reddit.com/r/DuplicatesBot/comments/6ypgmx/bugs_and_problems/)-[Suggestions](https://www.reddit.com/r/DuplicatesBot/comments/6ypg85/suggestion_for_duplicatesbot/)-[Block](https://www.reddit.com/r/DuplicatesBot/wiki/index#wiki_block_bot_from_tagging_on_your_posts)\n\n^^Now ^^you ^^can ^^remove ^^the ^^comment ^^by ^^replying ^^delete!'
                 try:
                     submission.reply(message)
                     logger.info('Message posted on {}'.format(sub_id))
