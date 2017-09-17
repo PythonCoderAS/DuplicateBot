@@ -1,6 +1,7 @@
 import praw
 from modules.logger import setup_logger
 from modules.login import reddit
+from modules.footer import footer
 import logging
 import time
 
@@ -15,11 +16,13 @@ def main():
 				if 'delete' in item.body.lower():
 					item.parent().delete()
 					logging.info('Comment {} removed'.format(str(item.parent())))
-					item.reply('The top level post has been removed.')
+					item.reply('The top level post has been removed.'+footer)
 			except:
 				logging.debug('Item {} skipped'.format(str(item)))
+	except(KeyboardInterrupt):
+		raise KeyboardInterrupt
 	except:
-		logging.debug('Error!', exc_info=True)
+		logging.error('Error!', exc_info=True)
 		main()
 		
 while True:

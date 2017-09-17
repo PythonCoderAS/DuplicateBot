@@ -112,3 +112,6 @@ blockusers.txt
 #logs
 *.log
 logs/
+
+#good bot bad bot file
+comments_written_to.txt

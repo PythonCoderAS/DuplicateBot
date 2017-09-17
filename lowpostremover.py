@@ -27,7 +27,6 @@ setvalue = 1
 
 #defining the searching and removal
 def action():
-    logging.info('Searching...')
     user = r.user.me()
     for comment in r.redditor(str(user)).comments.new(limit=None): #scanning all comments by reddit user without limit
         logging.debug('On comment {}'.format(str(comment)))
