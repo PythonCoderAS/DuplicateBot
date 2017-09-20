@@ -16,7 +16,7 @@ def main():
 				if 'delete' in item.body.lower():
 					item.parent().delete()
 					logging.info('Comment {} removed'.format(str(item.parent())))
-					item.reply('The top level post has been removed.'+footer)
+					item.author.message('Removal of comment {}'.format(str(item.parent())),'The top level post has been removed.')
 			except:
 				logging.debug('Item {} skipped'.format(str(item)))
 	except(KeyboardInterrupt):
