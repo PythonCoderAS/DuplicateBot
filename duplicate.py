@@ -8,8 +8,8 @@ from modules.footer import footer
 
 logger = setup_logger('duplicates')
 
-def action():
-    for sub_id in reddit.subreddit('all').stream.submissions():
+def run_bot(sub_id):
+    if True:
         try:
             logging.debug('Starting submission {}'.format(sub_id))
             blockeduser = 0
@@ -62,7 +62,11 @@ def action():
             raise KeyboardInterrupt
         except:
             logger.error('Error on submission {} occured.'.format(str(sub_id)), exc_info=True)
-        
+
+
+def action():
+    for sub_id in reddit.subreddit('all').stream.submissions():
+        run_bot(sub_id)
             
 
 if __name__ == '__main__':
