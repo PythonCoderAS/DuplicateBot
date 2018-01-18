@@ -3,18 +3,20 @@ from datetime import datetime
 
 import praw
 import prawcore
+from markdowntable import Table as ta
 from pokestarfansloggingsetup import setup_logger
 
 from modules.login import reddit
-from modules.table import starter
 
 logger = setup_logger('duplicates')
 
 
 # noinspection PyBroadException
 def generate_and_reply(submission):
-    footer = '\n\n----\n\n ^^I ^^am ^^a ^^bot  ^^[FAQ](https://www.reddit.com/r/DuplicatesBot/wiki/index)-[' \
-                      'Code](https://github.com/PokestarFan/DuplicateBot)-[Bugs](' \
+    starter = ta('Title')
+    starter.all_columns('Subreddit', 'Author', 'Time', 'Karma')
+    footer = '\n\n----\n\n I am a bot [FAQ](https://www.reddit.com/r/DuplicatesBot/wiki/index)-[' \
+             'Code](https://github.com/PokestarFan/DuplicateBot)-[Bugs](' \
                       'https://www.reddit.com/r/DuplicatesBot/comments/6ypgmx/bugs_and_problems/)-[Suggestions](' \
                       'https://www.reddit.com/r/DuplicatesBot/comments/6ypg85/suggestion_for_duplicatesbot/)-[Block ' \
                       'user (op only)' \
@@ -23,7 +25,7 @@ def generate_and_reply(submission):
                       '={user})-[Block from subreddit (mods only)](' \
                       'https://www.reddit.com/message/compose/?to=DuplicatesBotBlocker&subject=remove%20subreddit' \
                       '&message={sub})\n' \
-                      '\n^^Now ^^you ^^can ^^remove ^^the ^^comment ^^by ^^replying ^^delete! '.format(user=
+             '\nNow you can remove the comment by replying delete! '.format(user=
     str(
         submission.author), sub=str(submission.subreddit))
     global message
@@ -36,7 +38,7 @@ def generate_and_reply(submission):
         if str(submission.author) == author:
             author = author + ' [author of both threads]'
         duplicates.append(['[{}]({})'.format(str(dup_sub.title), 'https://www.reddit.com' + str(dup_sub.permalink)),
-                           str(dup_sub.subreddit), author, str(time), str(dup_sub.score)])
+                           '/r/' + str(dup_sub.subreddit), author, str(time), str(dup_sub.score)])
         if len(duplicates) > 0:
             message = 'Here is a list of threads in other subreddits about the same content:\n'
             for dup in duplicates:
@@ -45,28 +47,24 @@ def generate_and_reply(submission):
             message += '\n' + footer
     try:
         submission.reply(message)
-        logger.info('Message posted on {}'.format(sub_id))
+        logger.info('Message posted on {}'.format(str(submission)))
         logger.debug('Message: {}'.format(message))
-        message = ''
-    except praw.exceptions.APIException:
+    except(praw.exceptions.APIException, UnboundLocalError):
         logger.debug('Submission {} has been skipped due to missing text.'.format(sub_id))
-        message = ''
     except prawcore.exceptions.Forbidden:
         logger.debug('You are blocked on /r/{}'.format(str(submission.subreddit)))
-        message = ''
     except AssertionError:
         logger.debug('Assertion Error occured! Printing message and traceback.')
         logger.debug(message + str(len(message)), exc_info=True)
-        message = ''
     except(KeyboardInterrupt, SystemExit):
         raise
     except Exception:
         logger.error('Error occurred!', exc_info=True)
-        message = ''
     except:
         logger.critical(
             'Massive Error occurred! Not part of the Exception, KeyboardInterrupt or SystemExit exceptions. Fix ASAP.',
             exc_info=True)
+    finally:
         message = ''
 
 

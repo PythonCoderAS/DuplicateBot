@@ -1,6 +1,7 @@
-import praw
-from pokestarfansloggingsetup import setup_logger
 import logging
+
+from pokestarfansloggingsetup import setup_logger
+
 from modules.entrylogin import reddit
 
 logger = setup_logger('usersubblocker')
@@ -39,6 +40,13 @@ def strip_message(message):
 
 
 def check_for_messages(reddit):
-    for message in reddit.inbox.unread(mark_read=True):
-        strip_message(message)
-        reddit.inbox.mark_read(message)
+    try:
+        for message in reddit.inbox.unread(mark_read=True):
+            strip_message(message)
+            reddit.inbox.mark_read(message)
+    except Exception:
+        logging.error('error!', exc_info=True)
+
+
+while True:
+    check_for_messages(reddit)
