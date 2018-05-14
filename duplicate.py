@@ -1,3 +1,28 @@
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
+#  PPPPPPPPPPPPPPPPP                   kkkkkkkk                                                      tttt                                             FFFFFFFFFFFFFFFFFFFFFF                                 
+#  P::::::::::::::::P                  k::::::k                                                   ttt:::t                                             F::::::::::::::::::::F                                 
+#  P::::::PPPPPP:::::P                 k::::::k                                                   t:::::t                                             F::::::::::::::::::::F                                 
+#  PP:::::P     P:::::P                k::::::k                                                   t:::::t                                             FF::::::FFFFFFFFF::::F                                 
+#    P::::P     P:::::P  ooooooooooo    k:::::k    kkkkkkk eeeeeeeeeeee        ssssssssss   ttttttt:::::ttttttt      aaaaaaaaaaaaa  rrrrr   rrrrrrrrr   F:::::F       FFFFFFaaaaaaaaaaaaa  nnnn  nnnnnnnn    
+#    P::::P     P:::::Poo:::::::::::oo  k:::::k   k:::::kee::::::::::::ee    ss::::::::::s  t:::::::::::::::::t      a::::::::::::a r::::rrr:::::::::r  F:::::F             a::::::::::::a n:::nn::::::::nn  
+#    P::::PPPPPP:::::Po:::::::::::::::o k:::::k  k:::::ke::::::eeeee:::::eess:::::::::::::s t:::::::::::::::::t      aaaaaaaaa:::::ar:::::::::::::::::r F::::::FFFFFFFFFF   aaaaaaaaa:::::an::::::::::::::nn 
+#    P:::::::::::::PP o:::::ooooo:::::o k:::::k k:::::ke::::::e     e:::::es::::::ssss:::::stttttt:::::::tttttt               a::::arr::::::rrrrr::::::rF:::::::::::::::F            a::::ann:::::::::::::::n
+#    P::::PPPPPPPPP   o::::o     o::::o k::::::k:::::k e:::::::eeeee::::::e s:::::s  ssssss       t:::::t              aaaaaaa:::::a r:::::r     r:::::rF:::::::::::::::F     aaaaaaa:::::a  n:::::nnnn:::::n
+#    P::::P           o::::o     o::::o k:::::::::::k  e:::::::::::::::::e    s::::::s            t:::::t            aa::::::::::::a r:::::r     rrrrrrrF::::::FFFFFFFFFF   aa::::::::::::a  n::::n    n::::n
+#    P::::P           o::::o     o::::o k:::::::::::k  e::::::eeeeeeeeeee        s::::::s         t:::::t           a::::aaaa::::::a r:::::r            F:::::F            a::::aaaa::::::a  n::::n    n::::n
+#    P::::P           o::::o     o::::o k::::::k:::::k e:::::::e           ssssss   s:::::s       t:::::t    tttttta::::a    a:::::a r:::::r            F:::::F           a::::a    a:::::a  n::::n    n::::n
+#  PP::::::PP         o:::::ooooo:::::ok::::::k k:::::ke::::::::e          s:::::ssss::::::s      t::::::tttt:::::ta::::a    a:::::a r:::::r          FF:::::::FF         a::::a    a:::::a  n::::n    n::::n
+#  P::::::::P         o:::::::::::::::ok::::::k  k:::::ke::::::::eeeeeeee  s::::::::::::::s       tt::::::::::::::ta:::::aaaa::::::a r:::::r          F::::::::FF         a:::::aaaa::::::a  n::::n    n::::n
+#  P::::::::P          oo:::::::::::oo k::::::k   k:::::kee:::::::::::::e   s:::::::::::ss          tt:::::::::::tt a::::::::::aa:::ar:::::r          F::::::::FF          a::::::::::aa:::a n::::n    n::::n
+#  PPPPPPPPPP            ooooooooooo   kkkkkkkk    kkkkkkk eeeeeeeeeeeeee    sssssssssss              ttttttttttt    aaaaaaaaaa  aaaarrrrrrr          FFFFFFFFFFF           aaaaaaaaaa  aaaa nnnnnn    nnnnnn
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
+#                                                                                                                                                                                                            
 import logging
 from datetime import datetime
 
